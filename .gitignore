@@ -1,0 +1,36 @@
+# Python/FastAPI cache and environments
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+ENV/
+
+# Databases
+backend/resume_analyzer.db
+*.db
+*.sqlite3
+
+# Node/React dependencies and builds
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+
+# Credentials and Local Configuration files
+.env
+.env.local
+backend/.env
+frontend/.env
+
+# Editors/IDEs
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
