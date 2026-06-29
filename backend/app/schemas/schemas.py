@@ -11,7 +11,7 @@ class UserCreate(UserBase):
     password: str
 
 class UserResponse(UserBase):
-    id: int
+    id: str
     created_at: datetime
 
     class Config:
@@ -44,11 +44,11 @@ class AnalysisResultBase(BaseModel):
     suggested_skills: List[str] = []
 
 class AnalysisResultCreate(AnalysisResultBase):
-    resume_id: int
+    resume_id: str
 
 class AnalysisResultResponse(AnalysisResultBase):
-    id: int
-    resume_id: int
+    id: str
+    resume_id: str
     created_at: datetime
 
     class Config:
@@ -62,8 +62,8 @@ class JobMatchRequest(BaseModel):
     job_description: str
 
 class JobMatchResponse(BaseModel):
-    id: int
-    resume_id: int
+    id: str
+    resume_id: str
     job_title: str
     job_description: str
     match_score: int
@@ -82,13 +82,13 @@ class ResumeBase(BaseModel):
     filename: str
 
 class ResumeCreate(ResumeBase):
-    user_id: int
+    user_id: str
     parsed_text: str
     parsed_data: Optional[Dict[str, Any]] = None
 
 class ResumeResponse(ResumeBase):
-    id: int
-    user_id: int
+    id: str
+    user_id: str
     uploaded_at: datetime
     parsed_data: Optional[Dict[str, Any]] = None
 

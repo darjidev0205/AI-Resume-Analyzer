@@ -1,10 +1,8 @@
+# pyrefly: ignore [missing-import]
 from fastapi import FastAPI
+# pyrefly: ignore [missing-import]
 from fastapi.middleware.cors import CORSMiddleware
-from app.database import engine, Base
 from app.routes import auth, resume
-
-# Create the database tables on startup (if they don't exist)
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="AI Resume Analyzer API",
