@@ -47,9 +47,11 @@ import {
   Check,
 } from 'lucide-react';
 import API from '../services/api';
+import { useAuth } from '../context/AuthContext';
 
 export default function DashboardPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
   const [stats, setStats] = useState({
     total_resumes: 0,
     average_ats_score: 0,
@@ -244,7 +246,7 @@ export default function DashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             className="text-4xl font-extrabold tracking-tight text-white flex items-center gap-3"
           >
-            Welcome back, {stats.recent_resumes[0]?.parsed_data?.name?.split(' ')[0] || 'Dev'} 👋
+            Welcome back, {user?.name?.split(' ')[0] || 'Guest'} 👋
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0 }}

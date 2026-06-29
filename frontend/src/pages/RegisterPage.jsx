@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { Mail, Lock, User, UserPlus, Loader2, AlertCircle } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import API from '../services/api';
 
 export default function RegisterPage() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,8 +26,7 @@ export default function RegisterPage() {
       });
 
       const { access_token, user } = response.data;
-      localStorage.setItem('token', access_token);
-      localStorage.setItem('user', JSON.stringify(user));
+      login(access_token, user);
 
       navigate('/dashboard');
     } catch (err) {

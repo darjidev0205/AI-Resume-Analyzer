@@ -1,16 +1,16 @@
 import React from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { FileText, LayoutDashboard, Upload, BookOpen, User, LogOut, Cpu } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { user, logout } = useAuth();
   const token = localStorage.getItem('token');
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    logout();
     navigate('/login');
   };
 
@@ -77,7 +77,7 @@ export default function Navbar() {
               }`}
             >
               <User className="w-4 h-4" />
-              <span className="hidden md:inline">{user.full_name || 'Profile'}</span>
+              <span className="hidden md:inline">{user?.name || 'Profile'}</span>
             </Link>
 
             <button

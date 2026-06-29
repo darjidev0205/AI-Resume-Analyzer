@@ -1,10 +1,20 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function PrivateRoute({ children }) {
+  const { user, loading } = useAuth();
   const token = localStorage.getItem('token');
   
-  if (!token) {
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#070B14] flex items-center justify-center text-white">
+        <div className="animate-pulse">Loading secure session...</div>
+      </div>
+    );
+  }
+  
+  if (!token || !user) {
     return <Navigate to="/login" replace />;
   }
   

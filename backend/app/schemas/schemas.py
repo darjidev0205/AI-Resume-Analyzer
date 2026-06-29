@@ -13,6 +13,7 @@ class UserCreate(UserBase):
 class UserResponse(UserBase):
     id: str
     created_at: datetime
+    name: Optional[str] = None
 
     class Config:
         from_attributes = True

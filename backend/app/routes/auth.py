@@ -51,6 +51,7 @@ def register(user_in: schemas.UserCreate, db: Database = Depends(get_db)):
     }
     result = db.users.insert_one(db_user)
     db_user["id"] = str(result.inserted_id)
+    db_user["name"] = db_user["full_name"]
     
     # Generate token
     access_token = create_access_token(subject=db_user["email"])
@@ -71,6 +72,7 @@ def login(user_credentials: schemas.UserCreate, db: Database = Depends(get_db)):
         )
         
     user["id"] = str(user["_id"])
+    user["name"] = user.get("full_name")
     access_token = create_access_token(subject=user["email"])
     return {
         "access_token": access_token,

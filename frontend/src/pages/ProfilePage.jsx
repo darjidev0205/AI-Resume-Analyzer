@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { User, Mail, Calendar, Key, Shield, ShieldCheck, Activity } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 import API from '../services/api';
 
 export default function ProfilePage() {
-  const user = JSON.parse(localStorage.getItem('user') || '{}');
+  const { user } = useAuth();
   const [stats, setStats] = useState({
     total_resumes: 0,
     average_ats_score: 0
@@ -44,12 +45,12 @@ export default function ProfilePage() {
           <div className="space-y-4">
             <div>
               <span className="text-xs font-semibold text-brand-muted uppercase tracking-wider block">Full Name</span>
-              <span className="text-base font-bold text-white mt-1 block">{user.full_name || 'N/A'}</span>
+              <span className="text-base font-bold text-white mt-1 block">{user?.name || user?.full_name || 'N/A'}</span>
             </div>
 
             <div>
               <span className="text-xs font-semibold text-brand-muted uppercase tracking-wider block">Email Address</span>
-              <span className="text-base font-bold text-white mt-1 block">{user.email || 'N/A'}</span>
+              <span className="text-base font-bold text-white mt-1 block">{user?.email || 'N/A'}</span>
             </div>
 
             <div>

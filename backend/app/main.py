@@ -13,7 +13,13 @@ app = FastAPI(
 # CORS middleware configuration
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Allow all origins for dev simplicity, configure strictly in prod
+    allow_origins=[
+        "http://localhost:5173",
+        "http://localhost:3000",
+        "https://ai-resume-analyzer-git-main-darjidev0205s-projects.vercel.app",
+        "https://ai-resume-analyzer-chi-kohl-42.vercel.app",
+        "https://ai-resume-analyzer-pxyhxo7mm-darjidev0205s-projects.vercel.app",
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
