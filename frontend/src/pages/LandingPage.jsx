@@ -47,7 +47,7 @@ export default function LandingPage() {
 
   return (
     <div className="relative overflow-hidden min-h-screen bg-[#050816] text-white selection:bg-[#22D3EE]/30 selection:text-white">
-      {/* Custom Styles Injection */}
+      {/* Custom Responsive Styles Injection */}
       <style>{`
         @keyframes float {
           0%, 100% { transform: translateY(0px) rotate(0deg); }
@@ -66,18 +66,25 @@ export default function LandingPage() {
           50% { background-position: 100% 50%; }
           100% { background-position: 0% 50%; }
         }
-        .float-widget {
-          animation: float 6s ease-in-out infinite;
+        
+        /* Enable floating animations only on desktop/tablet for performance */
+        @media (min-width: 768px) {
+          .float-widget {
+            animation: float 6s ease-in-out infinite;
+          }
+          .float-widget-delayed {
+            animation: float-reverse 7s ease-in-out infinite;
+          }
+          .mesh-bg {
+            animation: mesh-drift 15s ease infinite;
+          }
         }
-        .float-widget-delayed {
-          animation: float-reverse 7s ease-in-out infinite;
-        }
+        
         .mesh-bg {
           background: radial-gradient(circle at 10% 20%, rgba(34, 211, 238, 0.15) 0%, transparent 40%),
                       radial-gradient(circle at 90% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 45%),
                       radial-gradient(circle at 50% 50%, rgba(217, 70, 239, 0.08) 0%, transparent 50%);
           background-size: 200% 200%;
-          animation: mesh-drift 15s ease infinite;
         }
         .grid-bg {
           background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
@@ -89,6 +96,14 @@ export default function LandingPage() {
           backdrop-filter: blur(16px);
           border: 1px solid rgba(255, 255, 255, 0.06);
         }
+        
+        /* Reduce blur intensity on mobile to save performance */
+        @media (max-width: 640px) {
+          .glass-card {
+            backdrop-filter: blur(8px);
+          }
+        }
+        
         .glow-button {
           box-shadow: 0 0 20px rgba(34, 211, 238, 0.3);
         }
@@ -101,24 +116,24 @@ export default function LandingPage() {
       <div className="absolute top-0 inset-x-0 h-[100vh] mesh-bg grid-bg -z-10 pointer-events-none" />
       
       {/* Radial circles of blur */}
-      <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] rounded-full bg-[#22D3EE]/5 blur-[120px] -z-10 pointer-events-none animate-pulse" />
-      <div className="absolute bottom-1/3 right-1/4 w-[600px] h-[600px] rounded-full bg-[#8B5CF6]/5 blur-[150px] -z-10 pointer-events-none animate-pulse" style={{ animationDuration: '8s' }} />
+      <div className="absolute top-1/4 left-1/4 w-[280px] h-[280px] sm:w-[500px] sm:h-[500px] rounded-full bg-[#22D3EE]/5 blur-[80px] sm:blur-[120px] -z-10 pointer-events-none animate-pulse" />
+      <div className="absolute bottom-1/3 right-1/4 w-[300px] h-[300px] sm:w-[600px] sm:h-[600px] rounded-full bg-[#8B5CF6]/5 blur-[90px] sm:blur-[150px] -z-10 pointer-events-none animate-pulse" style={{ animationDuration: '8s' }} />
 
-      {/* Star Field Effect */}
-      <div className="absolute inset-0 opacity-30 -z-10 pointer-events-none" style={{ backgroundImage: 'radial-gradient(white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+      {/* Star Field Effect (Hidden on mobile) */}
+      <div className="absolute inset-0 opacity-30 -z-10 pointer-events-none hidden sm:block" style={{ backgroundImage: 'radial-gradient(white 1px, transparent 0)', backgroundSize: '40px 40px' }} />
 
       {/* HERO SECTION */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-24 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-center">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-12 sm:pt-28 sm:pb-16 lg:pt-32 lg:pb-24 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 lg:gap-16 items-center min-h-[70vh] lg:min-h-0">
           {/* Hero Left Content */}
-          <div className="lg:col-span-6 space-y-8 text-center lg:text-left flex flex-col items-center lg:items-start">
+          <div className="lg:col-span-6 space-y-6 sm:space-y-8 text-center lg:text-left flex flex-col items-center lg:items-start justify-center">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-[#22D3EE]/30 bg-[#22D3EE]/5 text-[#22D3EE] text-xs font-semibold tracking-wider uppercase backdrop-blur-md"
+              className="inline-flex items-center gap-1.5 px-3 py-1 sm:px-4 sm:py-2 rounded-full border border-[#22D3EE]/30 bg-[#22D3EE]/5 text-[#22D3EE] text-[10px] sm:text-xs font-semibold tracking-wider uppercase backdrop-blur-md"
             >
-              <Sparkle className="w-4 h-4 text-[#22D3EE] fill-[#22D3EE]/20 animate-spin" style={{ animationDuration: '4s' }} />
+              <Sparkle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#22D3EE] fill-[#22D3EE]/20 animate-spin" style={{ animationDuration: '4s' }} />
               AI-Powered Resume Optimization
             </motion.div>
 
@@ -126,7 +141,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="text-5xl sm:text-7xl font-extrabold tracking-tight text-white leading-[1.1] max-w-xl"
+              className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-[1.1] max-w-xl"
             >
               Optimize Your Resume to Beat Every <br />
               <span className="bg-gradient-to-r from-[#22D3EE] via-[#8B5CF6] to-[#D946EF] bg-clip-text text-transparent drop-shadow-sm">
@@ -138,7 +153,7 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="text-slate-400 text-lg sm:text-xl leading-relaxed max-w-lg"
+              className="text-slate-400 text-sm sm:text-lg lg:text-xl leading-relaxed max-w-lg"
             >
               AI-powered resume optimization that helps you pass applicant tracking systems, increase interview callbacks, and secure your dream career.
             </motion.p>
@@ -147,12 +162,12 @@ export default function LandingPage() {
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.3 }}
-              className="flex flex-col sm:flex-row gap-4 w-full justify-center lg:justify-start"
+              className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto justify-center lg:justify-start"
             >
               {token ? (
                 <Link
                   to="/dashboard"
-                  className="px-8 py-4 bg-gradient-to-r from-[#22D3EE] to-[#8B5CF6] text-[#050816] font-bold rounded-2xl flex items-center justify-center gap-2 glow-button transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+                  className="px-8 py-3.5 bg-gradient-to-r from-[#22D3EE] to-[#8B5CF6] text-[#050816] font-bold rounded-2xl flex items-center justify-center gap-2 glow-button transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] w-full sm:w-auto"
                 >
                   Go to Dashboard <ArrowRight className="w-5 h-5" />
                 </Link>
@@ -160,13 +175,13 @@ export default function LandingPage() {
                 <>
                   <Link
                     to="/register"
-                    className="px-8 py-4 bg-gradient-to-r from-[#22D3EE] to-[#8B5CF6] text-[#050816] font-bold rounded-2xl flex items-center justify-center gap-2 glow-button transition-all duration-300 hover:scale-[1.03] active:scale-[0.98]"
+                    className="px-8 py-3.5 bg-gradient-to-r from-[#22D3EE] to-[#8B5CF6] text-[#050816] font-bold rounded-2xl flex items-center justify-center gap-2 glow-button transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] w-full sm:w-auto"
                   >
                     Analyze Resume Free <ArrowRight className="w-5 h-5" />
                   </Link>
                   <a
                     href="#preview"
-                    className="px-8 py-4 rounded-2xl border border-white/[0.08] bg-[#0E1628]/40 hover:bg-[#0E1628]/80 text-white font-bold flex items-center justify-center gap-2 transition-all hover:scale-[1.03]"
+                    className="px-8 py-3.5 rounded-2xl border border-white/[0.08] bg-[#0E1628]/40 hover:bg-[#0E1628]/80 text-white font-bold flex items-center justify-center gap-2 transition-all hover:scale-[1.03] w-full sm:w-auto"
                   >
                     <Play className="w-4 h-4 fill-white" /> Watch Demo
                   </a>
@@ -179,19 +194,19 @@ export default function LandingPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="pt-6 flex flex-wrap items-center gap-6 justify-center lg:justify-start text-xs text-slate-500"
+              className="pt-4 flex flex-wrap items-center gap-4 sm:gap-6 justify-center lg:justify-start text-[10px] sm:text-xs text-slate-500"
             >
               <div className="flex items-center gap-1">
-                <Check className="w-4 h-4 text-[#22D3EE]" /> No credit card required
+                <Check className="w-3.5 h-3.5 text-[#22D3EE]" /> No credit card required
               </div>
               <div className="flex items-center gap-1">
-                <Check className="w-4 h-4 text-[#8B5CF6]" /> GDPR & SOC2 Compliant
+                <Check className="w-3.5 h-3.5 text-[#8B5CF6]" /> GDPR & SOC2 Compliant
               </div>
             </motion.div>
           </div>
 
-          {/* Hero Right Dashboard Mockup */}
-          <div className="lg:col-span-6 relative flex items-center justify-center">
+          {/* Hero Right Dashboard Mockup (Hidden on mobile <768px to keep above-the-fold compact, scaled on tablet) */}
+          <div className="hidden md:flex lg:col-span-6 relative items-center justify-center md:scale-75 lg:scale-100 origin-center mt-12 lg:mt-0">
             {/* Background glowing orb */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full bg-gradient-to-tr from-[#22D3EE] to-[#8B5CF6] opacity-20 blur-[80px]" />
 
@@ -286,11 +301,11 @@ export default function LandingPage() {
               >
                 <div className="flex items-center gap-2 mb-3">
                   <Cpu className="w-4 h-4 text-[#D946EF]" />
-                  <span className="text-xs font-bold text-slate-300">AI Coach Coach Insights</span>
+                  <span className="text-xs font-bold text-slate-300">AI Coach Insights</span>
                 </div>
                 <div className="p-3 bg-white/[0.02] border border-white/[0.04] rounded-2xl text-[11px] leading-relaxed text-slate-400 space-y-1">
                   <p className="font-semibold text-white">Action Verb Upgrade Needed</p>
-                  <p>Change <span className="text-red-400 line-through">"Responsible for managing team"</span> to <span className="text-[#22D3EE] font-bold">"Orchestrated a 12-person cross-functional team"</span> to boost impact score by 25 points.</p>
+                  <p>Change <span className="text-red-400 line-through">"Responsible for managing team"</span> to <span className="text-[#22D3EE] font-bold">"Orchestrated a 12-person cross-functional team"</span> to boost impact score.</p>
                 </div>
               </motion.div>
 
@@ -311,51 +326,51 @@ export default function LandingPage() {
       </div>
 
       {/* SECTION 2: STATISTICS */}
-      <div className="border-y border-white/[0.04] bg-[#0E1628]/20 backdrop-blur-3xl py-16 relative z-10">
+      <div className="border-y border-white/[0.04] bg-[#0E1628]/20 backdrop-blur-3xl py-10 sm:py-16 relative z-10">
         <div className="container mx-auto px-4 max-w-6xl">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/[0.06]">
-            <div className="pt-6 md:pt-0">
-              <div className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-white/[0.06]">
+            <div className="pt-4 md:pt-0">
+              <div className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
                 <CountUp end="100,000" suffix="+" />
               </div>
-              <div className="text-xs sm:text-sm text-slate-500 mt-2 uppercase tracking-widest font-semibold">Resumes Scanned</div>
+              <div className="text-[10px] sm:text-xs text-slate-500 mt-2 uppercase tracking-widest font-semibold">Resumes Scanned</div>
             </div>
-            <div className="pt-6 md:pt-0">
-              <div className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+            <div className="pt-4 md:pt-0">
+              <div className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
                 <CountUp end="98" suffix="%" />
               </div>
-              <div className="text-xs sm:text-sm text-slate-500 mt-2 uppercase tracking-widest font-semibold">ATS Success Rate</div>
+              <div className="text-[10px] sm:text-xs text-slate-500 mt-2 uppercase tracking-widest font-semibold">ATS Success Rate</div>
             </div>
-            <div className="pt-6 md:pt-0">
-              <div className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight">
+            <div className="pt-4 md:pt-0">
+              <div className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight">
                 <CountUp end="50,000" suffix="+" />
               </div>
-              <div className="text-xs sm:text-sm text-slate-500 mt-2 uppercase tracking-widest font-semibold">Interview Calls</div>
+              <div className="text-[10px] sm:text-xs text-slate-500 mt-2 uppercase tracking-widest font-semibold">Interview Calls</div>
             </div>
-            <div className="pt-6 md:pt-0">
-              <div className="text-4xl sm:text-5xl font-extrabold text-white tracking-tight flex justify-center items-center gap-1">
+            <div className="pt-4 md:pt-0">
+              <div className="text-3xl sm:text-5xl font-extrabold text-white tracking-tight flex justify-center items-center gap-1">
                 <span>4.9</span>
-                <span className="text-amber-400 text-3xl">★</span>
+                <span className="text-amber-400 text-2xl sm:text-3xl">★</span>
               </div>
-              <div className="text-xs sm:text-sm text-slate-500 mt-2 uppercase tracking-widest font-semibold">Average Rating</div>
+              <div className="text-[10px] sm:text-xs text-slate-500 mt-2 uppercase tracking-widest font-semibold">Average Rating</div>
             </div>
           </div>
         </div>
       </div>
 
       {/* SECTION 3: HOW IT WORKS */}
-      <div className="py-28 relative z-10 max-w-6xl mx-auto px-4">
-        <div className="text-center space-y-4 mb-20">
+      <div className="py-16 sm:py-24 lg:py-28 relative z-10 max-w-6xl mx-auto px-4">
+        <div className="text-center space-y-3 mb-10 sm:mb-16 lg:mb-20">
           <h2 className="text-xs font-bold text-[#8B5CF6] uppercase tracking-widest">Optimisation Flow</h2>
           <h3 className="text-3xl sm:text-5xl font-extrabold text-white">How ATS Scanner Works</h3>
-          <p className="text-slate-400 max-w-md mx-auto text-sm">Transform your career path through our highly sophisticated step-by-step intelligence pipeline.</p>
+          <p className="text-slate-400 max-w-md mx-auto text-xs sm:text-sm">Transform your career path through our highly sophisticated step-by-step intelligence pipeline.</p>
         </div>
 
         <div className="relative">
           {/* Timeline Connector Line */}
           <div className="absolute top-1/2 left-4 right-4 h-0.5 bg-gradient-to-r from-[#22D3EE]/20 via-[#8B5CF6]/20 to-[#D946EF]/20 -translate-y-1/2 hidden lg:block" />
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 relative z-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-6 lg:gap-8 relative z-10">
             {[
               { num: '01', title: 'Upload Resume', desc: 'Securely upload your resume in PDF format.', color: 'border-[#22D3EE]/30 text-[#22D3EE] bg-[#22D3EE]/5' },
               { num: '02', title: 'AI Parsing', desc: 'Extractor decodes formatting and content structure.', color: 'border-[#8B5CF6]/30 text-[#8B5CF6] bg-[#8B5CF6]/5' },
@@ -366,15 +381,15 @@ export default function LandingPage() {
             ].map((step, idx) => (
               <motion.div
                 key={idx}
-                whileHover={{ y: -8 }}
-                className="glass-card rounded-[24px] p-6 border border-white/[0.06] flex flex-col justify-between min-h-[220px] relative group"
+                whileHover={{ y: -6 }}
+                className="glass-card rounded-[24px] p-5 sm:p-6 border border-white/[0.06] flex flex-col justify-between min-h-[180px] sm:min-h-[220px] relative group"
               >
-                <div className={`w-10 h-10 rounded-xl border flex items-center justify-center text-sm font-bold ${step.color}`}>
+                <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-xl border flex items-center justify-center text-xs sm:text-sm font-bold ${step.color}`}>
                   {step.num}
                 </div>
-                <div className="space-y-2 mt-6">
-                  <h4 className="text-base font-bold text-white group-hover:text-[#22D3EE] transition-colors">{step.title}</h4>
-                  <p className="text-slate-400 text-xs leading-relaxed">{step.desc}</p>
+                <div className="space-y-1 sm:space-y-2 mt-4 sm:mt-6">
+                  <h4 className="text-sm sm:text-base font-bold text-white group-hover:text-[#22D3EE] transition-colors">{step.title}</h4>
+                  <p className="text-slate-400 text-[11px] sm:text-xs leading-relaxed">{step.desc}</p>
                 </div>
               </motion.div>
             ))}
@@ -383,38 +398,39 @@ export default function LandingPage() {
       </div>
 
       {/* SECTION 4: FEATURES BENTO GRID */}
-      <div className="py-24 border-t border-white/[0.04] bg-[#0E1628]/10 backdrop-blur-3xl relative z-10">
+      <div className="py-16 sm:py-20 lg:py-24 border-t border-white/[0.04] bg-[#0E1628]/10 backdrop-blur-3xl relative z-10">
         <div className="container mx-auto px-4 max-w-6xl">
-          <div className="text-center space-y-4 mb-20">
+          <div className="text-center space-y-3 mb-10 sm:mb-16 lg:mb-20">
             <h2 className="text-xs font-bold text-[#22D3EE] uppercase tracking-widest">Premium Features</h2>
             <h3 className="text-3xl sm:text-5xl font-extrabold text-white">Engineered for Elite Results</h3>
-            <p className="text-slate-400 max-w-md mx-auto text-sm">Everything you need to bypass filters and land corporate offers.</p>
+            <p className="text-slate-400 max-w-md mx-auto text-xs sm:text-sm">Everything you need to bypass filters and land corporate offers.</p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+          {/* Bento grid layout: 1 col on mobile, 2 cols on tablet, 3 cols on desktop */}
+          <div className="grid grid-cols-1 sm:grid-cols-12 gap-6">
             
-            {/* Card 1: ATS Scanner (Double Width) */}
-            <div className="md:col-span-8 glass-card rounded-3xl p-8 relative overflow-hidden group hover:border-[#22D3EE]/30 transition-all duration-300">
+            {/* Card 1: ATS Scanner */}
+            <div className="sm:col-span-12 lg:col-span-8 glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden group hover:border-[#22D3EE]/30 transition-all duration-300">
               <div className="absolute top-0 right-0 w-48 h-48 bg-[#22D3EE]/5 rounded-full blur-3xl pointer-events-none group-hover:bg-[#22D3EE]/10 transition-colors" />
               <div className="space-y-4 max-w-md">
-                <div className="w-12 h-12 rounded-2xl bg-[#22D3EE]/10 border border-[#22D3EE]/20 flex items-center justify-center text-[#22D3EE]">
-                  <Activity className="w-6 h-6" />
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#22D3EE]/10 border border-[#22D3EE]/20 flex items-center justify-center text-[#22D3EE]">
+                  <Activity className="w-5.5 h-5.5 sm:w-6 sm:h-6" />
                 </div>
-                <h4 className="text-2xl font-bold text-white">Heuristic ATS Scanner</h4>
-                <p className="text-slate-400 text-sm leading-relaxed">
+                <h4 className="text-xl sm:text-2xl font-bold text-white">Heuristic ATS Scanner</h4>
+                <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
                   Our system performs semantic assessments based on recruitment standard models, verifying formatting compatibility, section headers, readability, and sizing parameters.
                 </p>
               </div>
             </div>
 
             {/* Card 2: OpenAI Review */}
-            <div className="md:col-span-4 glass-card rounded-3xl p-8 relative overflow-hidden group hover:border-[#8B5CF6]/30 transition-all duration-300">
+            <div className="sm:col-span-6 lg:col-span-4 glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden group hover:border-[#8B5CF6]/30 transition-all duration-300">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#8B5CF6]/5 rounded-full blur-2xl pointer-events-none" />
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 flex items-center justify-center text-[#8B5CF6]">
-                  <Cpu className="w-6 h-6" />
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 flex items-center justify-center text-[#8B5CF6]">
+                  <Cpu className="w-5.5 h-5.5 sm:w-6 sm:h-6" />
                 </div>
-                <h4 className="text-xl font-bold text-white">OpenAI Assessment</h4>
+                <h4 className="text-lg sm:text-xl font-bold text-white">OpenAI Assessment</h4>
                 <p className="text-slate-400 text-xs leading-relaxed">
                   Leverages state-of-the-art LLMs to evaluate section content and suggest punchy achievements.
                 </p>
@@ -422,40 +438,40 @@ export default function LandingPage() {
             </div>
 
             {/* Card 3: Keyword Analysis */}
-            <div className="md:col-span-4 glass-card rounded-3xl p-8 relative overflow-hidden group hover:border-[#D946EF]/30 transition-all duration-300">
+            <div className="sm:col-span-6 lg:col-span-4 glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden group hover:border-[#D946EF]/30 transition-all duration-300">
               <div className="absolute top-0 right-0 w-32 h-32 bg-[#D946EF]/5 rounded-full blur-2xl pointer-events-none" />
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#D946EF]/10 border border-[#D946EF]/20 flex items-center justify-center text-[#D946EF]">
-                  <Search className="w-6 h-6" />
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#D946EF]/10 border border-[#D946EF]/20 flex items-center justify-center text-[#D946EF]">
+                  <Search className="w-5.5 h-5.5 sm:w-6 sm:h-6" />
                 </div>
-                <h4 className="text-xl font-bold text-white">Keyword Saturations</h4>
+                <h4 className="text-lg sm:text-xl font-bold text-white">Keyword Saturations</h4>
                 <p className="text-slate-400 text-xs leading-relaxed">
                   Scours your PDF to map and highlight matched vs missing industry terms instantly.
                 </p>
               </div>
             </div>
 
-            {/* Card 4: Job Description Match (Double Width) */}
-            <div className="md:col-span-8 glass-card rounded-3xl p-8 relative overflow-hidden group hover:border-[#22D3EE]/30 transition-all duration-300">
+            {/* Card 4: Job Description Match */}
+            <div className="sm:col-span-12 lg:col-span-8 glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden group hover:border-[#22D3EE]/30 transition-all duration-300">
               <div className="absolute top-0 right-0 w-48 h-48 bg-[#22D3EE]/5 rounded-full blur-3xl pointer-events-none" />
               <div className="space-y-4 max-w-md">
-                <div className="w-12 h-12 rounded-2xl bg-[#22D3EE]/10 border border-[#22D3EE]/20 flex items-center justify-center text-[#22D3EE]">
-                  <CheckSquare className="w-6 h-6" />
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#22D3EE]/10 border border-[#22D3EE]/20 flex items-center justify-center text-[#22D3EE]">
+                  <CheckSquare className="w-5.5 h-5.5 sm:w-6 sm:h-6" />
                 </div>
-                <h4 className="text-2xl font-bold text-white">Target Role Matching</h4>
-                <p className="text-slate-400 text-sm leading-relaxed">
+                <h4 className="text-xl sm:text-2xl font-bold text-white">Target Role Matching</h4>
+                <p className="text-slate-400 text-xs sm:text-sm leading-relaxed">
                   Paste target descriptions to receive a precise match percentage and tailored optimization tips to rank high in recruiter dashboards.
                 </p>
               </div>
             </div>
 
             {/* Card 5: Resume Templates */}
-            <div className="md:col-span-4 glass-card rounded-3xl p-8 relative overflow-hidden group hover:border-[#8B5CF6]/30 transition-all duration-300">
+            <div className="sm:col-span-6 lg:col-span-4 glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden group hover:border-[#8B5CF6]/30 transition-all duration-300">
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 flex items-center justify-center text-[#8B5CF6]">
-                  <FileText className="w-6 h-6" />
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#8B5CF6]/10 border border-[#8B5CF6]/20 flex items-center justify-center text-[#8B5CF6]">
+                  <FileText className="w-5.5 h-5.5 sm:w-6 sm:h-6" />
                 </div>
-                <h4 className="text-xl font-bold text-white">ATS-friendly Templates</h4>
+                <h4 className="text-lg sm:text-xl font-bold text-white">ATS Templates</h4>
                 <p className="text-slate-400 text-xs leading-relaxed">
                   Browse optimized resume designs built specifically to satisfy parser restrictions.
                 </p>
@@ -463,12 +479,12 @@ export default function LandingPage() {
             </div>
 
             {/* Card 6: PDF Parser */}
-            <div className="md:col-span-4 glass-card rounded-3xl p-8 relative overflow-hidden group hover:border-[#D946EF]/30 transition-all duration-300">
+            <div className="sm:col-span-6 lg:col-span-4 glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden group hover:border-[#D946EF]/30 transition-all duration-300">
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#D946EF]/10 border border-[#D946EF]/20 flex items-center justify-center text-[#D946EF]">
-                  <Database className="w-6 h-6" />
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#D946EF]/10 border border-[#D946EF]/20 flex items-center justify-center text-[#D946EF]">
+                  <Database className="w-5.5 h-5.5 sm:w-6 sm:h-6" />
                 </div>
-                <h4 className="text-xl font-bold text-white">Layout PDF Parser</h4>
+                <h4 className="text-lg sm:text-xl font-bold text-white">Layout PDF Parser</h4>
                 <p className="text-slate-400 text-xs leading-relaxed">
                   Advanced text/content extraction tool pulls content layout and data sections reliably.
                 </p>
@@ -476,12 +492,12 @@ export default function LandingPage() {
             </div>
 
             {/* Card 7: AI Resume Coach */}
-            <div className="md:col-span-4 glass-card rounded-3xl p-8 relative overflow-hidden group hover:border-[#22D3EE]/30 transition-all duration-300">
+            <div className="sm:col-span-12 lg:col-span-4 glass-card rounded-3xl p-6 sm:p-8 relative overflow-hidden group hover:border-[#22D3EE]/30 transition-all duration-300">
               <div className="space-y-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#22D3EE]/10 border border-[#22D3EE]/20 flex items-center justify-center text-[#22D3EE]">
-                  <Sparkles className="w-6 h-6" />
+                <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-2xl bg-[#22D3EE]/10 border border-[#22D3EE]/20 flex items-center justify-center text-[#22D3EE]">
+                  <Sparkles className="w-5.5 h-5.5 sm:w-6 sm:h-6" />
                 </div>
-                <h4 className="text-xl font-bold text-white">AI Resume Coach</h4>
+                <h4 className="text-lg sm:text-xl font-bold text-white">AI Resume Coach</h4>
                 <p className="text-slate-400 text-xs leading-relaxed">
                   Discuss results directly with our integrated AI assistant to refine your CV layout.
                 </p>
@@ -493,16 +509,16 @@ export default function LandingPage() {
       </div>
 
       {/* SECTION 5: LIVE DASHBOARD PREVIEW */}
-      <div id="preview" className="py-28 relative z-10 max-w-6xl mx-auto px-4">
-        <div className="text-center space-y-4 mb-16">
+      <div id="preview" className="py-16 sm:py-24 lg:py-28 relative z-10 max-w-6xl mx-auto px-4">
+        <div className="text-center space-y-3 mb-10 sm:mb-16 lg:mb-20">
           <h2 className="text-xs font-bold text-[#D946EF] uppercase tracking-widest">Dashboard</h2>
           <h3 className="text-3xl sm:text-5xl font-extrabold text-white">The Intelligence Center</h3>
-          <p className="text-slate-400 max-w-md mx-auto text-sm">Preview the analytics panel you get once you run your first resume upload.</p>
+          <p className="text-slate-400 max-w-md mx-auto text-xs sm:text-sm">Preview the analytics panel you get once you run your first resume upload.</p>
         </div>
 
         <div className="glass-card rounded-[32px] overflow-hidden border border-white/[0.08] shadow-2xl flex flex-col md:flex-row h-auto md:h-[600px]">
           {/* Dashboard Preview Sidebar */}
-          <div className="w-full md:w-60 bg-[#0E1628]/40 border-b md:border-b-0 md:border-r border-white/[0.06] p-6 flex flex-col gap-6">
+          <div className="w-full md:w-60 bg-[#0E1628]/40 border-b md:border-b-0 md:border-r border-white/[0.06] p-5 sm:p-6 flex flex-col gap-4 sm:gap-6">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#22D3EE] to-[#8B5CF6] flex items-center justify-center">
                 <Cpu className="w-4 h-4 text-white" />
@@ -510,21 +526,21 @@ export default function LandingPage() {
               <span className="font-extrabold text-sm tracking-tight text-white">ATS<span className="text-[#22D3EE] font-medium">Scanner</span></span>
             </div>
             
-            <nav className="flex flex-col gap-2">
-              <button onClick={() => setActiveTab('overview')} className={`px-4 py-2.5 rounded-xl text-left text-xs font-semibold flex items-center gap-2 transition-all ${activeTab === 'overview' ? 'bg-[#22D3EE]/10 text-[#22D3EE]' : 'text-slate-400 hover:text-white'}`}>
+            <nav className="flex flex-row md:flex-col gap-1.5 overflow-x-auto md:overflow-visible pb-3 md:pb-0">
+              <button onClick={() => setActiveTab('overview')} className={`px-4 py-2.5 rounded-xl text-left text-xs font-semibold flex items-center gap-2 transition-all shrink-0 ${activeTab === 'overview' ? 'bg-[#22D3EE]/10 text-[#22D3EE]' : 'text-slate-400 hover:text-white'}`}>
                 <Activity className="w-4 h-4" /> Overview
               </button>
-              <button onClick={() => setActiveTab('keywords')} className={`px-4 py-2.5 rounded-xl text-left text-xs font-semibold flex items-center gap-2 transition-all ${activeTab === 'keywords' ? 'bg-[#22D3EE]/10 text-[#22D3EE]' : 'text-slate-400 hover:text-white'}`}>
+              <button onClick={() => setActiveTab('keywords')} className={`px-4 py-2.5 rounded-xl text-left text-xs font-semibold flex items-center gap-2 transition-all shrink-0 ${activeTab === 'keywords' ? 'bg-[#22D3EE]/10 text-[#22D3EE]' : 'text-slate-400 hover:text-white'}`}>
                 <Search className="w-4 h-4" /> Keywords
               </button>
-              <button onClick={() => setActiveTab('coach')} className={`px-4 py-2.5 rounded-xl text-left text-xs font-semibold flex items-center gap-2 transition-all ${activeTab === 'coach' ? 'bg-[#22D3EE]/10 text-[#22D3EE]' : 'text-slate-400 hover:text-white'}`}>
+              <button onClick={() => setActiveTab('coach')} className={`px-4 py-2.5 rounded-xl text-left text-xs font-semibold flex items-center gap-2 transition-all shrink-0 ${activeTab === 'coach' ? 'bg-[#22D3EE]/10 text-[#22D3EE]' : 'text-slate-400 hover:text-white'}`}>
                 <Sparkles className="w-4 h-4" /> AI Insights
               </button>
             </nav>
           </div>
 
           {/* Dashboard Preview Content */}
-          <div className="flex-1 p-6 md:p-8 bg-[#0E1628]/10 overflow-y-auto">
+          <div className="flex-1 p-5 sm:p-6 md:p-8 bg-[#0E1628]/10 overflow-y-auto">
             <AnimatePresence mode="wait">
               {activeTab === 'overview' && (
                 <motion.div 
@@ -535,34 +551,34 @@ export default function LandingPage() {
                   className="space-y-6"
                 >
                   <div className="flex justify-between items-center">
-                    <h5 className="font-bold text-lg text-white">Assessment Overview</h5>
-                    <span className="text-xs text-slate-500">Updated just now</span>
+                    <h5 className="font-bold text-sm sm:text-lg text-white">Assessment Overview</h5>
+                    <span className="text-[10px] text-slate-500">Updated just now</span>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                    <div className="p-5 bg-white/[0.02] border border-white/[0.04] rounded-2xl space-y-4">
-                      <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500">ATS Rating</span>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
+                    <div className="p-4 sm:p-5 bg-white/[0.02] border border-white/[0.04] rounded-2xl space-y-3 sm:space-y-4">
+                      <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-slate-500">ATS Rating</span>
                       <div className="flex items-baseline gap-1">
-                        <span className="text-3xl font-black text-white">92</span>
+                        <span className="text-2xl sm:text-3xl font-black text-white">92</span>
                         <span className="text-slate-500 text-xs">/ 100</span>
                       </div>
                       <div className="w-full bg-white/[0.04] h-1 rounded-full overflow-hidden">
                         <div className="bg-[#22D3EE] h-full rounded-full" style={{ width: '92%' }} />
                       </div>
                     </div>
-                    <div className="p-5 bg-white/[0.02] border border-white/[0.04] rounded-2xl space-y-4">
-                      <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500">Resume Health</span>
+                    <div className="p-4 sm:p-5 bg-white/[0.02] border border-white/[0.04] rounded-2xl space-y-3 sm:space-y-4">
+                      <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-slate-500">Resume Health</span>
                       <div className="flex items-baseline gap-1">
-                        <span className="text-3xl font-black text-white">96%</span>
+                        <span className="text-2xl sm:text-3xl font-black text-white">96%</span>
                       </div>
                       <div className="w-full bg-white/[0.04] h-1 rounded-full overflow-hidden">
                         <div className="bg-[#8B5CF6] h-full rounded-full" style={{ width: '96%' }} />
                       </div>
                     </div>
-                    <div className="p-5 bg-white/[0.02] border border-white/[0.04] rounded-2xl space-y-4">
-                      <span className="text-[10px] uppercase font-bold tracking-wider text-slate-500">Keyword Density</span>
+                    <div className="p-4 sm:p-5 bg-white/[0.02] border border-white/[0.04] rounded-2xl space-y-3 sm:space-y-4">
+                      <span className="text-[9px] sm:text-[10px] uppercase font-bold tracking-wider text-slate-500">Keyword Density</span>
                       <div className="flex items-baseline gap-1">
-                        <span className="text-3xl font-black text-white">88%</span>
+                        <span className="text-2xl sm:text-3xl font-black text-white">88%</span>
                       </div>
                       <div className="w-full bg-white/[0.04] h-1 rounded-full overflow-hidden">
                         <div className="bg-[#D946EF] h-full rounded-full" style={{ width: '88%' }} />
@@ -570,9 +586,9 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  <div className="p-5 bg-white/[0.02] border border-white/[0.04] rounded-2xl space-y-4">
+                  <div className="p-4 sm:p-5 bg-white/[0.02] border border-white/[0.04] rounded-2xl space-y-4">
                     <span className="text-xs font-bold text-slate-400">Score History Trend</span>
-                    <div className="h-40 flex items-end gap-3 pt-6">
+                    <div className="h-32 sm:h-40 flex items-end gap-2 sm:gap-3 pt-4 sm:pt-6">
                       {[65, 72, 78, 85, 92].map((h, i) => (
                         <div key={i} className="flex-1 flex flex-col items-center gap-2 h-full justify-end">
                           <div className="bg-gradient-to-t from-[#8B5CF6] to-[#22D3EE] rounded-t-lg w-full transition-all duration-500 hover:brightness-110" style={{ height: `${h}%` }} />
@@ -592,7 +608,7 @@ export default function LandingPage() {
                   exit={{ opacity: 0, y: -10 }}
                   className="space-y-6"
                 >
-                  <h5 className="font-bold text-lg text-white">Keyword coverage</h5>
+                  <h5 className="font-bold text-sm sm:text-lg text-white">Keyword coverage</h5>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-3">
                       <span className="text-xs font-bold text-slate-400 block border-b border-white/[0.04] pb-1.5">Matched (8)</span>
@@ -626,7 +642,7 @@ export default function LandingPage() {
                   exit={{ opacity: 0, y: -10 }}
                   className="space-y-6"
                 >
-                  <h5 className="font-bold text-lg text-white">AI Coach Insights</h5>
+                  <h5 className="font-bold text-sm sm:text-lg text-white">AI Coach Insights</h5>
                   <div className="space-y-3">
                     {[
                       { priority: 'High', title: 'Add metrics to experience bullet points', desc: 'Recruiters want quantitative proof. Change "managed software releases" to "coordinated 15+ microservices deployments increasing uptime to 99.9%".' },
@@ -652,18 +668,18 @@ export default function LandingPage() {
       </div>
 
       {/* SECTION 6: TESTIMONIALS */}
-      <div className="py-24 border-t border-white/[0.04] bg-[#0E1628]/10 backdrop-blur-3xl relative z-10">
+      <div className="py-16 sm:py-20 lg:py-24 border-t border-white/[0.04] bg-[#0E1628]/10 backdrop-blur-3xl relative z-10">
         <div className="container mx-auto px-4 max-w-6xl">
-          <div className="text-center space-y-4 mb-20">
+          <div className="text-center space-y-3 mb-10 sm:mb-16 lg:mb-20">
             <h2 className="text-xs font-bold text-[#8B5CF6] uppercase tracking-widest">Testimonials</h2>
             <h3 className="text-3xl sm:text-5xl font-extrabold text-white">Trusted by Top Talents</h3>
-            <p className="text-slate-400 max-w-md mx-auto text-sm">Read stories from developers and designers who secured offers at global companies.</p>
+            <p className="text-slate-400 max-w-md mx-auto text-xs sm:text-sm">Read stories from developers and designers who secured offers at global companies.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { name: 'Sarah Jenkins', role: 'Senior React Developer', company: 'Stripe', text: 'ATS Scanner completely changed my job hunting game. I went from zero responses to getting calls from Stripe and Netflix within a week of optimizing my keywords.', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80' },
-              { name: 'David Chen', role: 'Full Stack Engineer', company: 'OpenAI', text: 'The AI Resume Coach provided highly specific suggestions that were spot on. Upgrading my action verbs boosted my score to 95 and directly landed my interview.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80' },
+              { name: David Chen = 'David Chen', role: 'Full Stack Engineer', company: 'OpenAI', text: 'The AI Resume Coach provided highly specific suggestions that were spot on. Upgrading my action verbs boosted my score to 95 and directly landed my interview.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80' },
               { name: 'Elena Rostova', role: 'Backend Lead', company: 'Linear', text: 'An absolute masterpiece of design and logic. The bento grid feature mappings show exactly what recruiters care about. Highly recommended.', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80' },
             ].map((t, idx) => (
               <motion.div
@@ -690,12 +706,12 @@ export default function LandingPage() {
       </div>
 
       {/* SECTION 7: COMPANIES */}
-      <div className="py-16 border-t border-white/[0.04] bg-[#050816] relative z-10">
+      <div className="py-12 sm:py-16 border-t border-white/[0.04] bg-[#050816] relative z-10">
         <div className="container mx-auto px-4 max-w-6xl text-center">
-          <p className="text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-10">Trusted by Professionals from Elite Tech Hubs</p>
-          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-16 opacity-30 grayscale contrast-200">
+          <p className="text-[10px] sm:text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-8 sm:mb-10">Trusted by Professionals from Elite Tech Hubs</p>
+          <div className="flex flex-wrap justify-center items-center gap-8 sm:gap-12 md:gap-16 opacity-30 grayscale contrast-200">
             {['Google', 'Microsoft', 'Amazon', 'Meta', 'Netflix', 'Apple', 'Stripe', 'OpenAI'].map((comp, idx) => (
-              <span key={idx} className="text-lg font-black tracking-tighter text-white hover:opacity-100 transition-opacity cursor-default">
+              <span key={idx} className="text-sm sm:text-lg font-black tracking-tighter text-white hover:opacity-100 transition-opacity cursor-default">
                 {comp}
               </span>
             ))}
@@ -704,14 +720,14 @@ export default function LandingPage() {
       </div>
 
       {/* SECTION 8: PRICING */}
-      <div className="py-28 border-t border-white/[0.04] bg-[#0E1628]/10 backdrop-blur-3xl relative z-10">
+      <div className="py-16 sm:py-24 lg:py-28 border-t border-white/[0.04] bg-[#0E1628]/10 backdrop-blur-3xl relative z-10">
         <div className="container mx-auto px-4 max-w-5xl">
-          <div className="text-center space-y-4 mb-16">
+          <div className="text-center space-y-3 mb-10 sm:mb-16 lg:mb-20">
             <h2 className="text-xs font-bold text-[#8B5CF6] uppercase tracking-widest">Pricing</h2>
             <h3 className="text-3xl sm:text-5xl font-extrabold text-white">Find Your Fit</h3>
             
             {/* Toggle monthly/yearly */}
-            <div className="flex items-center justify-center gap-3 pt-6">
+            <div className="flex items-center justify-center gap-3 pt-4 sm:pt-6">
               <span className={`text-xs ${billingPeriod === 'monthly' ? 'text-white' : 'text-slate-400'}`}>Monthly</span>
               <button 
                 onClick={() => setBillingPeriod(p => p === 'monthly' ? 'yearly' : 'monthly')}
@@ -727,7 +743,7 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Free */}
-            <div className="glass-card rounded-[32px] p-8 border border-white/[0.06] flex flex-col justify-between min-h-[480px]">
+            <div className="glass-card rounded-[32px] p-6 sm:p-8 border border-white/[0.06] flex flex-col justify-between min-h-[440px] sm:min-h-[480px]">
               <div>
                 <h4 className="text-base font-bold text-white">Basic Starter</h4>
                 <p className="text-slate-400 text-xs mt-2">Perfect for starting optimization.</p>
@@ -749,7 +765,7 @@ export default function LandingPage() {
             </div>
 
             {/* Pro */}
-            <div className="glass-card rounded-[32px] p-8 border-2 border-[#8B5CF6]/60 flex flex-col justify-between min-h-[480px] relative">
+            <div className="glass-card rounded-[32px] p-6 sm:p-8 border-2 border-[#8B5CF6]/60 flex flex-col justify-between min-h-[440px] sm:min-h-[480px] relative">
               <span className="absolute top-0 right-8 -translate-y-1/2 px-3 py-1 bg-gradient-to-r from-[#22D3EE] to-[#8B5CF6] text-[#050816] rounded-full text-[10px] font-bold uppercase tracking-wider">Best Value</span>
               <div>
                 <h4 className="text-base font-bold text-white">Professional</h4>
@@ -772,7 +788,7 @@ export default function LandingPage() {
             </div>
 
             {/* Enterprise */}
-            <div className="glass-card rounded-[32px] p-8 border border-white/[0.06] flex flex-col justify-between min-h-[480px]">
+            <div className="glass-card rounded-[32px] p-6 sm:p-8 border border-white/[0.06] flex flex-col justify-between min-h-[440px] sm:min-h-[480px]">
               <div>
                 <h4 className="text-base font-bold text-white">Enterprise Elite</h4>
                 <p className="text-slate-400 text-xs mt-2">For professional coaching academies.</p>
@@ -798,8 +814,8 @@ export default function LandingPage() {
       </div>
 
       {/* SECTION 9: FAQ */}
-      <div className="py-24 border-t border-white/[0.04] relative z-10 max-w-4xl mx-auto px-4">
-        <div className="text-center space-y-4 mb-16">
+      <div className="py-16 sm:py-20 lg:py-24 border-t border-white/[0.04] relative z-10 max-w-4xl mx-auto px-4">
+        <div className="text-center space-y-3 mb-10 sm:mb-16 lg:mb-20">
           <h2 className="text-xs font-bold text-[#22D3EE] uppercase tracking-widest">FAQ</h2>
           <h3 className="text-3xl sm:text-5xl font-extrabold text-white">Frequently Asked Questions</h3>
         </div>
@@ -814,7 +830,7 @@ export default function LandingPage() {
             <div key={i} className="glass-card rounded-2xl border border-white/[0.06] overflow-hidden">
               <button 
                 onClick={() => toggleFaq(i)}
-                className="w-full p-5 text-left font-bold text-white flex items-center justify-between hover:bg-white/[0.01] transition-colors focus:outline-none"
+                className="w-full p-4 sm:p-5 text-left font-bold text-white flex items-center justify-between hover:bg-white/[0.01] transition-colors focus:outline-none text-xs sm:text-sm"
               >
                 <span>{faq.q}</span>
                 {faqOpen[i] ? <ChevronUp className="w-4 h-4 text-[#22D3EE]" /> : <ChevronDown className="w-4 h-4 text-slate-400" />}
@@ -829,7 +845,7 @@ export default function LandingPage() {
                     transition={{ duration: 0.2 }}
                     className="overflow-hidden"
                   >
-                    <p className="p-5 pt-0 text-xs text-slate-400 leading-relaxed border-t border-white/[0.03]">
+                    <p className="p-4 sm:p-5 pt-0 text-[11px] sm:text-xs text-slate-400 leading-relaxed border-t border-white/[0.03]">
                       {faq.a}
                     </p>
                   </motion.div>
