@@ -679,7 +679,7 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               { name: 'Sarah Jenkins', role: 'Senior React Developer', company: 'Stripe', text: 'ATS Scanner completely changed my job hunting game. I went from zero responses to getting calls from Stripe and Netflix within a week of optimizing my keywords.', img: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80' },
-              { name: David Chen = 'David Chen', role: 'Full Stack Engineer', company: 'OpenAI', text: 'The AI Resume Coach provided highly specific suggestions that were spot on. Upgrading my action verbs boosted my score to 95 and directly landed my interview.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80' },
+              { name: 'David Chen', role: 'Full Stack Engineer', company: 'OpenAI', text: 'The AI Resume Coach provided highly specific suggestions that were spot on. Upgrading my action verbs boosted my score to 95 and directly landed my interview.', img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80' },
               { name: 'Elena Rostova', role: 'Backend Lead', company: 'Linear', text: 'An absolute masterpiece of design and logic. The bento grid feature mappings show exactly what recruiters care about. Highly recommended.', img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=100&q=80' },
             ].map((t, idx) => (
               <motion.div
