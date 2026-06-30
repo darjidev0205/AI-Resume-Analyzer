@@ -3,6 +3,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import jwt, JWTError
 from pymongo.database import Database
+from pymongo.errors import ConnectionFailure, ServerSelectionTimeoutError
 from app.database import get_db
 from app.config import settings
 from app.schemas import schemas
@@ -26,7 +27,16 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Database = Depends
     except JWTError:
         raise credentials_exception
         
-    user = db.users.find_one({"email": email})
+    try:
+        user = db.users.find_one({"email": email})
+    except (ConnectionFailure, ServerSelectionTimeoutError):
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Database is temporarily unavailable",
+        )
+    except Exception:
+        raise credentials_exception
+
     if user is None:
         raise credentials_exception
     user["id"] = str(user["_id"])
@@ -64,10 +74,15 @@ def register(user_in: schemas.UserCreate, db: Database = Depends(get_db)):
         }
     except HTTPException as he:
         raise he
-    except Exception as e:
+    except (ConnectionFailure, ServerSelectionTimeoutError):
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Database is temporarily unavailable",
+        )
+    except Exception:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Database error during registration: {str(e)}",
+            detail="An unexpected database error occurred during registration",
         )
 
 @router.post("/login", response_model=schemas.Token)
@@ -90,9 +105,15 @@ def login(user_credentials: schemas.UserCreate, db: Database = Depends(get_db)):
         }
     except HTTPException as he:
         raise he
-    except Exception as e:
+    except (ConnectionFailure, ServerSelectionTimeoutError):
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="Database is temporarily unavailable",
+        )
+    except Exception:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            detail=f"Database error during login: {str(e)}",
+            detail="An unexpected database error occurred during login",
         )
+
 

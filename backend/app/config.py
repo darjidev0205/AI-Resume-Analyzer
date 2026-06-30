@@ -3,11 +3,11 @@ from typing import Optional
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    # If DATABASE_URL is not set, we use SQLite
-    DATABASE_URL: Optional[str] = None
+    MONGODB_URL: Optional[str] = None
+    DATABASE_NAME: str = "resume_analyzer"
     JWT_SECRET: str = "dev_secret_key_987654321_ats_resume_analyzer"
     JWT_ALGORITHM: str = "HS256"
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 1440
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60
     OPENAI_API_KEY: Optional[str] = None
 
     model_config = SettingsConfigDict(
@@ -17,3 +17,4 @@ class Settings(BaseSettings):
     )
 
 settings = Settings()
+

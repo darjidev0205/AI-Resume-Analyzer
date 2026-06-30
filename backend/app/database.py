@@ -1,29 +1,15 @@
-import os
 from pymongo import MongoClient
 from app.config import settings
 
-DATABASE_URL = settings.DATABASE_URL
+client = MongoClient(
+    settings.MONGODB_URL,
+    serverSelectionTimeoutMS=5000,
+    connectTimeoutMS=5000,
+    socketTimeoutMS=5000,
+)
 
-if not DATABASE_URL:
-    DATABASE_URL = "mongodb://localhost:27017/resume_analyzer"
-
-# Initialize MongoClient
-client = MongoClient(DATABASE_URL)
-
-# Extract database name from connection string or default to "resume_analyzer"
-db_name = None
-try:
-    from pymongo.uri_parser import parse_uri
-    parsed = parse_uri(DATABASE_URL)
-    db_name = parsed.get("database")
-except Exception:
-    pass
-
-if not db_name:
-    db_name = "resume_analyzer"
-
-db_client = client[db_name]
+db = client[settings.DATABASE_NAME]
 
 def get_db():
-    yield db_client
+    return db
 

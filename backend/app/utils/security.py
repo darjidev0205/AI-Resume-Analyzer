@@ -1,19 +1,19 @@
+import bcrypt
 from datetime import datetime, timedelta
 from typing import Any, Union
 from jose import jwt # pyright: ignore[reportMissingModuleSource]
-from passlib.context import CryptContext # pyright: ignore[reportMissingModuleSource]
 from fastapi import HTTPException # pyright: ignore[reportMissingImports]
 from app.config import settings
-
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 MAX_BCRYPT_PASSWORD_BYTES = 72
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
-    if len(plain_password.encode("utf-8")) > MAX_BCRYPT_PASSWORD_BYTES:
+    try:
+        if len(plain_password.encode("utf-8")) > MAX_BCRYPT_PASSWORD_BYTES:
+            return False
+        return bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8"))
+    except Exception:
         return False
-
-    return pwd_context.verify(plain_password, hashed_password)
 
 def get_password_hash(password: str) -> str:
     if len(password.encode("utf-8")) > MAX_BCRYPT_PASSWORD_BYTES:
@@ -21,8 +21,10 @@ def get_password_hash(password: str) -> str:
             status_code=400,
             detail="Password must be 72 bytes or less"
         )
+    salt = bcrypt.gensalt()
+    hashed = bcrypt.hashpw(password.encode("utf-8"), salt)
+    return hashed.decode("utf-8")
 
-    return pwd_context.hash(password)
 
 def create_access_token(subject: Union[str, Any], expires_delta: timedelta = None) -> str:
     expire = datetime.utcnow() + (
