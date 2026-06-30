@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { 
   FileText, CheckCircle2, AlertCircle, Sparkles, Award, Star, Info, 
-  Loader2, ArrowLeft, RefreshCw, Send, Download, Share2, Compare, 
+  Loader2, ArrowLeft, RefreshCw, Send, Download, Share2, GitCompare, 
   Check, ArrowRight, Zap, Target, BookOpen, Clock, Copy, Plus, 
   HelpCircle, ChevronDown, ChevronUp, Printer, Mail, Code
 } from 'lucide-react';
@@ -796,7 +796,7 @@ export default function ATSResultPage() {
               
               <div className="mb-8">
                 <h3 className="text-base font-bold text-white flex items-center gap-2">
-                  <Compare className="w-5 h-5 text-[#D946EF]" /> Structural Comparison
+                  <GitCompare className="w-5 h-5 text-[#D946EF]" /> Structural Comparison
                 </h3>
                 <p className="text-slate-400 text-xs mt-1">Side-by-side assessment of parsed parameters vs standard recruitment thresholds.</p>
               </div>
