@@ -67,10 +67,9 @@ export default function ResumeTemplatesPage() {
         </div>
       </div>
 
-      {/* Templates List */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {templates.map((tpl) => (
-          <div key={tpl.id} className={`glass-panel p-6 rounded-2xl border ${tpl.color} flex flex-col justify-between h-[420px] transition-all hover:scale-[1.02]`}>
+          <div key={tpl.id} className={`glass-panel p-6 rounded-2xl border ${tpl.color} flex flex-col justify-between min-h-[420px] h-auto transition-all hover:scale-[1.02]`}>
             <div className="space-y-4">
               <div className="w-10 h-10 bg-brand-dark/80 rounded-xl flex items-center justify-center border border-brand-border">
                 <FileText className="w-5 h-5 text-white" />

@@ -29,7 +29,7 @@ export default function ProfilePage() {
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto space-y-10">
+    <div className="max-w-4xl mx-auto space-y-10 px-4 w-full">
       <div>
         <h1 className="text-3xl font-extrabold text-white">Your Profile</h1>
         <p className="text-brand-muted text-sm mt-1">Manage your account credentials and see platform stats.</p>

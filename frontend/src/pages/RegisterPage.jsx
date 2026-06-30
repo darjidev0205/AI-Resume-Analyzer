@@ -40,8 +40,8 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="max-w-md mx-auto my-12 md:my-20">
-      <div className="glass-panel p-8 rounded-2xl border border-brand-border shadow-neon relative">
+    <div className="max-w-md mx-auto my-12 md:my-20 px-4 w-full">
+      <div className="glass-panel p-6 sm:p-8 rounded-2xl border border-brand-border shadow-neon relative">
         {/* Glow Element */}
         <div className="absolute top-0 right-10 w-20 h-20 bg-neon-blue/20 blur-xl pointer-events-none" />
 

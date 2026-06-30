@@ -767,7 +767,8 @@ export default function DashboardPage() {
               </div>
             </div>
 
-            <div className="overflow-x-auto">
+            {/* Desktop Table view */}
+            <div className="hidden sm:block overflow-x-auto">
               <table className="w-full text-left border-collapse">
                 <thead>
                   <tr className="border-b border-white/[0.06] pb-3">
@@ -841,6 +842,61 @@ export default function DashboardPage() {
                   })}
                 </tbody>
               </table>
+            </div>
+
+            {/* Mobile Cards view */}
+            <div className="block sm:hidden space-y-4">
+              {filteredResumes.map((resume) => {
+                const analysis = resume.analysis_results?.[0];
+                const rScore = analysis?.ats_score ?? 76;
+                const matchObj = resume.job_matches?.[0];
+                
+                return (
+                  <div key={resume.id} className="p-4 bg-white/[0.01] border border-white/[0.04] rounded-2xl space-y-3">
+                    <div className="flex justify-between items-center">
+                      <div className="flex items-center gap-2">
+                        <FileText className="w-4 h-4 text-[#22D3EE]" />
+                        <span className="text-xs font-bold text-white truncate max-w-[170px]" title={resume.filename}>
+                          {resume.filename}
+                        </span>
+                      </div>
+                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                        rScore >= 80 ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' :
+                        rScore >= 50 ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' :
+                        'bg-red-500/10 text-red-400 border border-red-500/20'
+                      }`}>
+                        {rScore}
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 text-[10px] text-slate-400 pt-1">
+                      <div>
+                        <span className="block text-slate-500 uppercase text-[8px] tracking-wider">Uploaded</span>
+                        <span>{new Date(resume.uploaded_at).toLocaleDateString()}</span>
+                      </div>
+                      <div>
+                        <span className="block text-slate-500 uppercase text-[8px] tracking-wider">Job Match</span>
+                        <span className="truncate block">{matchObj ? `${matchObj.job_title} (${matchObj.match_score}%)` : 'N/A'}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex gap-2 pt-2">
+                      <button
+                        onClick={() => navigate(`/result?resumeId=${resume.id}`)}
+                        className="flex-grow py-2 text-center text-[10px] font-bold text-[#22D3EE] bg-[#22D3EE]/10 hover:bg-[#22D3EE]/20 border border-[#22D3EE]/20 rounded-xl"
+                      >
+                        View Report
+                      </button>
+                      <button
+                        onClick={() => handleDeleteResume(resume.id)}
+                        className="p-2 text-slate-500 hover:text-red-400 bg-white/[0.02] border border-white/[0.04] rounded-xl"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </motion.div>
         </>

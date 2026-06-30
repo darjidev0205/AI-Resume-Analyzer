@@ -173,7 +173,7 @@ const handleUpload = async () => {
 };
 
   return (
-    <div className="max-w-2xl mx-auto py-8">
+    <div className="max-w-2xl mx-auto py-8 px-4 w-full">
       <div className="text-center mb-10">
         <h1 className="text-3xl font-extrabold text-white">
           Upload Your Resume
@@ -220,7 +220,7 @@ const handleUpload = async () => {
                   <FileText className="w-8 h-8" />
                 </div>
 
-                <h3 className="text-lg font-bold text-white mb-1 truncate max-w-[400px]">
+                <h3 className="text-lg font-bold text-white mb-1 truncate max-w-[260px] sm:max-w-[400px]">
                   {file.name}
                 </h3>
 
