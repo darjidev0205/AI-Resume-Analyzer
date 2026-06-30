@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams, useNavigate, Link } from 'react-router-dom';
 import { 
-  FileText, CheckCircle2, AlertCircle, Sparkles, Award, Star, Info, 
+  FileText, Cpu, CheckCircle2, AlertCircle, Sparkles, Award, Star, Info, 
   Loader2, ArrowLeft, RefreshCw, Send, Download, Share2, GitCompare, 
   Check, ArrowRight, Zap, Target, BookOpen, Clock, Copy, Plus, 
   HelpCircle, ChevronDown, ChevronUp, Printer, Mail, Code
