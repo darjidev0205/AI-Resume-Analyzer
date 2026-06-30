@@ -847,17 +847,17 @@ export default function DashboardPage() {
       )}
 
       {/* Floating AI Assistant Widget */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+      <div className="z-[9999]">
         <AnimatePresence>
           {aiChatOpen && (
             <motion.div
               initial={{ opacity: 0, y: 20, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
-              className="w-96 bg-[#111827] border border-white/[0.08] rounded-3xl shadow-2xl overflow-hidden flex flex-col h-[400px]"
+              className="fixed left-3 right-3 bottom-20 sm:left-auto sm:right-6 sm:bottom-6 sm:w-[420px] w-auto h-[70vh] sm:h-[650px] max-h-[70vh] sm:max-h-[650px] z-[9999] rounded-3xl overflow-hidden bg-[#111827] border border-white/[0.08] shadow-2xl flex flex-col"
             >
               {/* Header */}
-              <div className="bg-[#1f2937]/50 border-b border-white/[0.06] p-4 flex items-center justify-between">
+              <div className="bg-[#1f2937]/50 border-b border-white/[0.06] p-4 flex items-center justify-between shrink-0">
                 <div className="flex items-center gap-2">
                   <Brain className="w-5 h-5 text-[#A855F7] animate-pulse" />
                   <div>
@@ -878,11 +878,11 @@ export default function DashboardPage() {
               {/* Message History */}
               <div className="flex-1 p-4 overflow-y-auto space-y-4 scrollbar">
                 {aiMessages.map((msg, i) => (
-                  <div key={i} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`max-w-[80%] p-3 rounded-2xl text-xs leading-relaxed ${
+                  <div key={i} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'} w-full`}>
+                    <div className={`max-w-[85%] p-3 rounded-2xl text-sm sm:text-xs leading-relaxed break-words whitespace-pre-wrap ${
                       msg.sender === 'user'
-                        ? 'bg-gradient-to-r from-[#22D3EE] to-[#A855F7] text-white rounded-tr-none'
-                        : 'bg-white/[0.04] border border-white/[0.06] text-slate-200 rounded-tl-none'
+                        ? 'bg-gradient-to-r from-[#22D3EE] to-[#A855F7] text-white rounded-tr-none text-left'
+                        : 'bg-white/[0.04] border border-white/[0.06] text-slate-200 rounded-tl-none text-left'
                     }`}>
                       {msg.text}
                     </div>
@@ -891,17 +891,17 @@ export default function DashboardPage() {
               </div>
 
               {/* Chat Input */}
-              <form onSubmit={handleSendAiMessage} className="p-3 border-t border-white/[0.06] flex gap-2">
+              <form onSubmit={handleSendAiMessage} className="p-3 border-t border-white/[0.06] flex gap-2 w-full shrink-0 bg-[#111827]">
                 <input
                   type="text"
                   placeholder="Need help improving your resume? Ask here..."
                   value={aiInput}
                   onChange={(e) => setAiInput(e.target.value)}
-                  className="flex-1 bg-white/[0.04] border border-white/[0.06] rounded-xl px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#22D3EE]"
+                  className="flex-1 min-w-0 bg-white/[0.04] border border-white/[0.06] rounded-xl px-3 py-2 text-sm sm:text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#22D3EE]"
                 />
                 <button
                   type="submit"
-                  className="p-2.5 bg-[#22D3EE] hover:bg-[#22D3EE]/80 text-[#070B14] rounded-xl flex items-center justify-center cursor-pointer transition-all"
+                  className="p-2.5 bg-[#22D3EE] hover:bg-[#22D3EE]/80 text-[#070B14] rounded-xl flex items-center justify-center cursor-pointer transition-all shrink-0"
                 >
                   <Send className="w-4 h-4" />
                 </button>
@@ -915,11 +915,12 @@ export default function DashboardPage() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => setAiChatOpen(!aiChatOpen)}
-          className="bg-gradient-to-r from-[#22D3EE] to-[#A855F7] text-white p-4 rounded-full shadow-2xl flex items-center justify-center glow-cyan relative cursor-pointer"
+          className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 bg-gradient-to-r from-[#22D3EE] to-[#A855F7] text-white p-4 rounded-full shadow-2xl flex items-center justify-center glow-cyan z-[9999] cursor-pointer"
         >
           {aiChatOpen ? <X className="w-6 h-6" /> : <MessageSquare className="w-6 h-6 animate-pulse" />}
         </motion.button>
       </div>
+
 
     </div>
   );
